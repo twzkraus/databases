@@ -5,13 +5,37 @@ var database = require('../models/index.js');
 var mysql = require('mysql');
 var request = require('request'); // You might need to npm install the request module!
 var expect = require('chai').expect;
-
+/*
 describe('Testing getAll', function() {
   it('Should get all messages', function(done) {
     expect(database.messages.getAll()).to.equal([]);
+    done();
   });
 });
 
+describe('Testing create', function() {
+  it('Should create a new row', function(done) {
+    expect(database.messages.create('turner', 'office', 'next', '2020-09-10 00:00:01' ).to.equal([message]));
+    expect(database.messages.getAll()).to.equal([]);
+    done();
+  })
+})
+
+describe('Testing create user', function() {
+  it('Should create a new row', function(done) {
+    database.users.create('kevin');
+    database.users.getAll();
+    done();
+  })
+})
+describe('Testing create room', function() {
+  it('Should create a new row', function(done) {
+    database.rooms.create('Living Room');
+    database.rooms.getAll();
+    done();
+  })
+})
+*/
 describe('Persistent Node Chat Server', function() {
   var dbConnection;
 

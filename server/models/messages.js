@@ -9,7 +9,7 @@ module.exports = {
       if (err) {
         console.error(err);
       } else {
-        console.log('success!', results);
+        console.log('got all messages!');
       }
     });
     // a function which produces all the messages
@@ -21,23 +21,32 @@ module.exports = {
     // Example from StackOverflow: 'SELECT * FROM table WHERE id=? LIMIT ?, 5',[ user_id, start ]
     // query db to get userId from username
     database.dbConnection.connect();
-    database.dbConnection.query(`SELECT id from names where name=${username}`, [], (err, userId) => {
+    database.dbConnection.query(`SELECT id from users where userName='${username}'`, [], (err, userArray) => {
       if (err) {
         console.error(err);
       } else {
+        let userId = userArray[0].id;
         // query db to get roomId from roomname
-        database.dbConnection.query(`SELECT id from rooms where room=${roomname}`, [], (err, roomId) => {
+        database.dbConnection.query(`SELECT id from rooms where roomName='${roomname}'`, [], (err, roomArray) => {
           if (err) {
             console.error(err);
           } else {
-            // possibly reformat date
-            var queryString = `insert into messages (id, userId, dateCreated, roomId, messageText) values (${counter}, ${userId}, '${date}', ${roomId}, ${text})`;
-            database.dbConnection.query(queryString, [], function(err, results) {
+            let roomId = roomArray[0].id;
+            // query db to get last id
+            database.dbConnection.query('SELECT * from messages', [], (err, messagesArray) => {
               if (err) {
                 console.error(err);
               } else {
-                counter++;
-                console.log('success!', results);
+                let lastMessageId = messagesArray[messagesArray.length - 1].id;
+                var queryString = `insert into messages (id, userId, dateCreated, roomId, messageText) values (${lastMessageId + 1}, ${userId}, '${date}', ${roomId}, '${text}')`;
+                database.dbConnection.query(queryString, [], function(err, results) {
+                  if (err) {
+                    console.error(err);
+                  } else {
+                    counter++;
+                    console.log('message added!');
+                  }
+                });
               }
             });
           }
@@ -46,3 +55,4 @@ module.exports = {
     });
   }
 };
+

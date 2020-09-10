@@ -1,15 +1,7 @@
--- CREATE DATABASE chat;
+CREATE DATABASE chat;
 
 USE chat;
 
-CREATE TABLE messages (
-  id int,
-  userId int,
-  dateCreated date,
-  roomId int,
-  messageText varchar(255),
-  primary key(id)
-);
 
 CREATE TABLE rooms (
   id int,
@@ -23,8 +15,19 @@ CREATE TABLE users (
   primary key(id)
 );
 
+CREATE TABLE messages (
+  id int,
+  userId int,
+  dateCreated date,
+  roomId int,
+  messageText varchar(255),
+  primary key(id),
+  foreign key(userId) references users(id),
+  foreign key(roomId) references rooms(id)
+);
 
 
+-- DROP DATABASE chat
 
 
 /*  Execute this file from the command line by typing:

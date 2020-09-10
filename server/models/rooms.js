@@ -2,7 +2,7 @@ var database = require('../db/index.js');
 
 module.exports = {
   getAll: function () {
-    var queryString = 'SELECT * FROM users';
+    var queryString = 'SELECT * FROM rooms';
     database.dbConnection.connect();
     database.dbConnection.query(queryString, [], function(err, results) {
       if (err) {
@@ -13,32 +13,31 @@ module.exports = {
     });
   },
 
-  create: function (name) {
-    var checkUser = `SELECT userName from users where userName ='${name}'`;
+  create: function (room) {
+    var checkRoom = `SELECT roomName from rooms where roomName ='${room}'`;
     database.dbConnection.connect();
-    database.dbConnection.query(checkUser, [], (err, identicalUsernames) => {
-      console.log('IDENTICAL USERNAMES:', identicalUsernames);
+    database.dbConnection.query(checkRoom, [], (err, identicalRoomNames) => {
       if (err) {
         console.error(err);
-      } else if (identicalUsernames.length === 0) {
-        var queryStringFirst = 'SELECT max(id) from users';
+      } else if (identicalRoomNames.length === 0) {
+        var queryStringFirst = 'SELECT max(id) from rooms';
         database.dbConnection.query(queryStringFirst, [], (err, results) => {
           if (err) {
             console.error(err);
           } else {
-            let lastUserId = results[0]['max(id)'];
-            var queryString = `INSERT INTO users (userName, id) values ('${name}', ${lastUserId + 1}) `;
+            let lastRoomId = results[0]['max(id)'];
+            var queryString = `INSERT INTO rooms (roomName, id) values ('${room}', ${lastRoomId + 1}) `;
             database.dbConnection.query(queryString, [], (err, data) => {
               if (err) {
                 console.error(err);
               } else {
-                console.log('user added!');
+                console.log('room added!');
               }
             });
           }
         });
       } else {
-        console.log(`The username "${name}" is taken. Please enter a unique username`);
+        console.log(`The room name "${room}" is taken. Please enter a unique room name.`);
       }
     });
   }
