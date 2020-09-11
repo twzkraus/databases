@@ -12,5 +12,6 @@ module.exports = {
     database: 'chat'
   })
 };
+module.exports.dbConnection.connect();
 // export default dbConnection;
 

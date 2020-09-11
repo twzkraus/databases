@@ -1,5 +1,4 @@
 var models = require('../models');
-var databaseUsers = require('../models/users.js');
 
 // {
 //   method: 'POST',
@@ -9,13 +8,15 @@ var databaseUsers = require('../models/users.js');
 
 module.exports = {
   get: function (req, res) {
-
+    models.users.getAll(results => {
+      res.json(results);
+    });
   },
+  // a function which handles a get request for all messages
   post: function (req, res) {
-    req.writeHead(200);
-    req.on('data', data => {
-      console.log(data);
-      req.end();
+    let params = { username: req.body.username };
+    models.users.create(params, result => {
+      res.json(result);
     });
   }
 };

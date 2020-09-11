@@ -1,3 +1,4 @@
+DROP DATABASE chat;
 CREATE DATABASE chat;
 
 USE chat;
@@ -5,25 +6,23 @@ USE chat;
 
 CREATE TABLE rooms (
   id int NOT NULL AUTO_INCREMENT ,
-  roomName varchar(255),
+  roomname varchar(255),
   primary key(id)
 );
 
 CREATE TABLE users (
   id int NOT NULL AUTO_INCREMENT ,
-  userName varchar(255),
+  username varchar(255),
   primary key(id)
 );
 
 CREATE TABLE messages (
   id int NOT NULL AUTO_INCREMENT,
-  userId int NOT NULL AUTO_INCREMENT,
-  dateCreated date,
-  roomId int NOT NULL AUTO_INCREMENT,
+  userId int NOT NULL,
+  roomname varchar(255),
   messageText varchar(255),
   primary key(id),
-  foreign key(userId) references users(id),
-  foreign key(roomId) references rooms(id)
+  foreign key(userId) references users(id)
 );
 
 
