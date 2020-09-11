@@ -4,22 +4,22 @@ USE chat;
 
 
 CREATE TABLE rooms (
-  id int,
+  id int NOT NULL AUTO_INCREMENT ,
   roomName varchar(255),
   primary key(id)
 );
 
 CREATE TABLE users (
-  id int,
+  id int NOT NULL AUTO_INCREMENT ,
   userName varchar(255),
   primary key(id)
 );
 
 CREATE TABLE messages (
-  id int,
-  userId int,
+  id int NOT NULL AUTO_INCREMENT,
+  userId int NOT NULL AUTO_INCREMENT,
   dateCreated date,
-  roomId int,
+  roomId int NOT NULL AUTO_INCREMENT,
   messageText varchar(255),
   primary key(id),
   foreign key(userId) references users(id),

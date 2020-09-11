@@ -9,6 +9,7 @@ module.exports = {
         console.error(err);
       } else {
         console.log(results);
+        database.dbConnection.end();
       }
     });
   },
@@ -33,6 +34,7 @@ module.exports = {
                 console.error(err);
               } else {
                 console.log('user added!');
+                database.dbConnection.end();
               }
             });
           }
